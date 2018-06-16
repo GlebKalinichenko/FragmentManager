@@ -1,5 +1,5 @@
 package codelab.android.library.fragmentmanagerlib
 
 enum class AnimationType {
-    FORWARD, BACK
+    FORWARD, BACK, NONE
 }
