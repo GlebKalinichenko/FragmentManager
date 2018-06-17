@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateFragment() {
         val kotlinFragment = KotlinSampleFragment.instance()
-        coordinator.replaceFragment(MainActivity::javaClass.name, R.id.container_layout, kotlinFragment,
-                supportFragmentManager, -1, -1)
+        coordinator.replace(MainActivity::javaClass.name, R.id.container_layout, kotlinFragment,
+                supportFragmentManager)
     }
 }

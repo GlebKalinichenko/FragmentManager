@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentManager
 class FragmentCoordinator {
 
     /**
-     * Change fragment in layout container
+     * Change fragment in layout container.
      * @param tag                       Tag of fragment in fragment manager
      * @param containerId               Layout container for fragment
      * @param fragment                  Fragment for insert
@@ -15,16 +15,28 @@ class FragmentCoordinator {
      * @param animationStart            Resource id for animation on start
      * @param animationEnd              Resource id for animation on end
      * */
-    fun replaceFragment(tag: String, containerId: Int, fragment: Fragment, fragmentManager: FragmentManager,
-                        animationStart: Int, animationEnd: Int, animationType: AnimationType = AnimationType.FORWARD) {
+    fun replace(tag: String, containerId: Int, fragment: Fragment, fragmentManager: FragmentManager,
+            animationStart: Int, animationEnd: Int, animationType: AnimationType = AnimationType.FORWARD) {
         val transaction = fragmentManager.beginTransaction()
 
-        if (animationStart != -1 && animationEnd != -1) {
+        // check animation resource type
+        if (animationStart != AnimationStatus.ANIMATION_NONE && animationEnd != AnimationStatus.ANIMATION_NONE) {
             if (animationType == AnimationType.FORWARD) transaction.setCustomAnimations(animationStart, animationEnd)
-            else transaction.setCustomAnimations(animationStart, animationEnd)
+            if (animationType == AnimationType.BACK) transaction.setCustomAnimations(animationStart, animationEnd)
         }
 
         transaction.replace(containerId, fragment, tag).commit()
+    }
+
+    /**
+     * Change fragment in layout container with disabled animation between changing.
+     * @param tag                       Tag of fragment in fragment manager
+     * @param containerId               Layout container for fragment
+     * @param fragment                  Fragment for insert
+     * @param fragmentManager           Fragment manager for change fragment
+     * */
+    fun replace(tag: String, containerId: Int, fragment: Fragment, fragmentManager: FragmentManager){
+        replace(tag, containerId, fragment, fragmentManager, AnimationStatus.ANIMATION_NONE, AnimationStatus.ANIMATION_NONE, AnimationType.NONE)
     }
 
     /**
