@@ -58,6 +58,58 @@ class FragmentCoordinator {
     }
 
     /**
+     * Change fragment in layout container with disabled animation between changing.
+     * @param tag                       Tag of fragment in fragment manager
+     * @param containerId               Layout container for fragment
+     * @param fragment                  Fragment for insert
+     * @param fragmentManager           Fragment manager for change fragment
+     * */
+    fun add(tag: String, containerId: Int, fragment: Fragment, fragmentManager: FragmentManager){
+        add(tag, containerId, fragment, fragmentManager, AnimationStatus.ANIMATION_NONE, AnimationStatus.ANIMATION_NONE, AnimationType.NONE)
+    }
+
+    /**
+     * Add fragment in layout container.
+     * @param tag                       Tag of fragment in fragment manager
+     * @param containerId               Layout container for fragment
+     * @param fragment                  Fragment for insert
+     * @param fragmentManager           Fragment manager for change fragment
+     * @param type                      Direct of animation
+     * @param animationStart            Resource id for animation on start
+     * @param animationEnd              Resource id for animation on end
+     * */
+    fun add(tag: String, containerId: Int, fragment: Fragment, fragmentManager: FragmentManager,
+                animationStart: Int, animationEnd: Int, animationType: AnimationType = AnimationType.FORWARD,
+                backStackType: BackStackType = BackStackType.NONE) {
+        val transaction = fragmentManager.beginTransaction()
+
+        // check animation resource type
+        if (animationStart != AnimationStatus.ANIMATION_NONE && animationEnd != AnimationStatus.ANIMATION_NONE) {
+            if (animationType == AnimationType.FORWARD) transaction.setCustomAnimations(animationStart, animationEnd)
+            if (animationType == AnimationType.BACK) transaction.setCustomAnimations(animationStart, animationEnd)
+        }
+
+        if (backStackType == BackStackType.NONE)
+            transaction.add(containerId, fragment, tag).commit()
+        if (backStackType == BackStackType.ADD)
+            transaction.add (containerId, fragment, tag).addToBackStack(tag).commit()
+    }
+
+    /**
+     * Add fragment in layout container with disabled animation between changing.
+     * @param tag                       Tag of fragment in fragment manager
+     * @param containerId               Layout container for fragment
+     * @param fragment                  Fragment for insert
+     * @param fragmentManager           Fragment manager for change fragment
+     * @param backStackType             Is need add fragment to backstack
+     * */
+    fun add(tag: String, containerId: Int, fragment: Fragment, fragmentManager: FragmentManager,
+                backStackType: BackStackType){
+        add(tag, containerId, fragment, fragmentManager, AnimationStatus.ANIMATION_NONE, AnimationStatus.ANIMATION_NONE, AnimationType.NONE,
+                backStackType)
+    }
+
+    /**
      * Find fragment by tag in fragment manager
      * @param tag                       Tag of fragment inside fragment manager
      * @param fragmentManager           Source fragment manager
