@@ -4,12 +4,12 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import codelab.android.library.fragmentmanagerlib.FragmentCoordinator
 
-class MainActivity : AppCompatActivity() {
+class KotlinMainActivity : AppCompatActivity() {
     val coordinator = FragmentCoordinator()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.kotlin_activity_main)
     }
 
     override fun onStart() {
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateFragment() {
         val kotlinFragment = KotlinSampleFragment.instance()
-        coordinator.replace(MainActivity::javaClass.name, R.id.container_layout, kotlinFragment,
+        coordinator.replace(KotlinMainActivity::javaClass.name, R.id.container_layout, kotlinFragment,
                 supportFragmentManager)
     }
 }
