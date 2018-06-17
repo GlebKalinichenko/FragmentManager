@@ -23,7 +23,7 @@ public class JavaMainActivity extends AppCompatActivity {
 
     private void updateFragment() {
         Fragment javaFragment = JavaSampleFragment.getInstance();
-        coordinator.replace(JavaMainActivity.class.getCanonicalName(), R.id.container_layout, javaFragment,
+        coordinator.add(JavaMainActivity.class.getCanonicalName(), R.id.container_layout, javaFragment,
                 getSupportFragmentManager());
     }
 }
